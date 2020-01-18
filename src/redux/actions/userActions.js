@@ -1,4 +1,4 @@
-import { LOADING_UI, SET_USER, CLEAR_ERRORS, SET_ERRORS, SET_UNAUTHENTICATED, LOADING_USER } from '../types';
+import { LOADING_UI, SET_USER, CLEAR_ERRORS, SET_ERRORS, SET_UNAUTHENTICATED, LOADING_USER, MARK_NOTIFICATION_READ } from '../types';
 import axios from 'axios';
 
 export const getUserData = () => dispatch => {
