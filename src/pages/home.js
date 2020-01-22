@@ -14,7 +14,7 @@ import Typography  from '@material-ui/core/Typography';
 
 class home extends Component {
     componentDidMount(){
-        this.props.getTasks()
+        this.props.getTasks('ongoing')
     }
     render (){
         const {data: {tasks,loading}} = this.props;

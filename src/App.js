@@ -35,6 +35,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import { Typography } from "@material-ui/core";
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -62,6 +64,15 @@ const useStyles = makeStyles((theme) => ({
   },
   navatar: {
     marginRight: theme.spacing(2)
+  },
+  h5ondrawer: {
+    padding:'0 0 0 15px'
+  },
+  sidenavitem: {
+    paddingTop: '0px'
+  },
+  itemtextside: {
+    margin: '5px auto 0px auto'
   }
 }));
 
@@ -130,7 +141,7 @@ function App() {
           <Navbar navatarClass={classes.navatar} newClass={classes.appBar} toClick={toggleDrawer('left', true)} />
           {authenticated?(
           <Fragment>  
-          <Hidden mdDown>
+          <Hidden smDown>
           <Drawer
                     className={classes.drawer}
                     variant="permanent"
@@ -139,20 +150,30 @@ function App() {
                     }}
                 >
                     <div className={classes.toolbar} />
+                    <Typography variant='h5' color='primary' className={classes.h5ondrawer}>Tasks:</Typography>
                     <List>
-                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                        <ListItem button key={text}>
+                    {['Ongoing', 'Completed', 'Failed', 'Discontinued'].map((text, index) => (
+                        <ListItem className={classes.sidenavitem} button key={text}>
                         <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                        <ListItemText primary={text} />
+                        <ListItemText className={classes.itemtextside} primary={text} />
                         </ListItem>
                     ))}
                     </List>
                     <Divider />
                     <List>
-                    {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                        <ListItem button key={text}>
+                    {['My To-Do', 'Scheduler', 'Leave seeker', 'Team'].map((text, index) => (
+                        <ListItem className={classes.sidenavitem} button key={text}>
                         <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                        <ListItemText primary={text} />
+                        <ListItemText className={classes.itemtextside} primary={text} />
+                        </ListItem>
+                    ))}
+                    </List>
+                    <Divider />
+                    <List>
+                    {['My profile',  'Logout'].map((text, index) => (
+                        <ListItem className={classes.sidenavitem} button key={text}>
+                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                        <ListItemText className={classes.itemtextside} primary={text} />
                         </ListItem>
                     ))}
                     </List>

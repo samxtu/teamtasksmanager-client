@@ -26,7 +26,9 @@ import {
     DELETE_TASK_RESPONSE_COMMENT,
     DELETE_RESPONSE_RESPONSE,
     DELETE_RESPONSE_RESPONSE_COMMENT,
-    CLEAR_ERRORS
+    CLEAR_ERRORS,
+    SET_ERRORS,
+    LOADING_UI
   } from "../types";
   import axios from 'axios';
 
@@ -373,12 +375,12 @@ export const catchError = (error) => (dispatch) => {
 }
 
 export const deleteScream = (screamId) => (dispatch) =>{
-    axios.delete(`/scream/${screamId}`)
-    .then(()=>{
-        dispatch({
-            type: DELETE_SCREAM,
-            payload: screamId
-        })
-    })
-    .catch(err=> console.log(err))
+    // axios.delete(`/scream/${screamId}`)
+    // .then(()=>{
+    //     dispatch({
+    //         type: DELETE_SCREAM,
+    //         payload: screamId
+    //     })
+    // })
+    // .catch(err=> console.log(err))
 }

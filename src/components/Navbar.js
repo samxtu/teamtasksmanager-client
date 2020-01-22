@@ -12,6 +12,7 @@ import Avatar from '@material-ui/core/Avatar';
 import HomeIcon from '@material-ui/icons/Home';
 import MenuIcon from '@material-ui/icons/Menu';
 import Hidden from '@material-ui/core/Hidden';
+import Typography from '@material-ui/core/Typography';
 
   
 class Navbar extends Component {
@@ -28,13 +29,14 @@ class Navbar extends Component {
                                 </MyButton>
                             </Hidden>
                             <Button color="inherit" component={Link} to="/login">
-                            <MyButton tip='Home'>
+                            <Avatar>
                                 <HomeIcon />
-                            </MyButton><h2>Office manager</h2></Button>
-                            <Avatar position="relative" alt="Img" src={avatarLink} className={navatarClass,"navatar"} />
+                            </Avatar>
+                            <Typography variant='h5'>Office manager</Typography>
+                            </Button>
                         </Fragment>
                     ):(
-                        <Button color="inherit" component={Link} to="/login"><h2>Office manager</h2></Button>
+                        <Button color="inherit" component={Link} to="/login"><Typography variant='h2'>Office manager</Typography></Button>
                     )}
                 </Toolbar>
             </AppBar>

@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {getScream,clearErrors,postComment, comment, clearScream, deleteComment} from '../redux/actions/dataActions';
+import {getScream,clearErrors,postComment, comment, clearTask, deleteComment} from '../redux/actions/dataActions';
 import MyButton from '../util/MyButton';
 import LikeButton from './LikeButton';
 //mui stuff 
@@ -101,16 +101,16 @@ class ScreamExpand extends Component {
     handleClick = () =>{
         this.props.comment()
         console.log(this.props.id)
-        this.props.getScream(this.props.id)
+        // this.props.getScream(this.props.id)
     }
     handleClose = () =>{
         this.setState({
             body: '',
             open: false
         })
-        this.props.comment()
+        // this.props.comment()
         this.props.clearErrors()
-        this.props.clearScream()
+        // this.props.clearScream()
     }
     handleChange = (event) => {
         this.setState({
@@ -119,7 +119,7 @@ class ScreamExpand extends Component {
     }
     handleSubmit = (event) => {
         event.preventDefault();
-        this.props.postComment(this.props.scream.screamId, { body: this.state.body })
+        // this.props.postComment(this.props.scream.screamId, { body: this.state.body })
         this.setState({
             body:''
         })
@@ -130,7 +130,7 @@ class ScreamExpand extends Component {
         })
     }
     handleCommentDelete = (id) => {
-        this.props.deleteComment(this.props.scream.screamId, id)
+        // this.props.deleteComment(this.props.scream.screamId, id)
         this.setState({
             open: true
         })

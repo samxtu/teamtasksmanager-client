@@ -4,9 +4,9 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {likeScream, unlikeScream, comment, getScream} from '../redux/actions/dataActions';
-import LikeButton from './LikeButton';
-import ScreamExpand from './ScreamExpand';
+// import {likeScream, unlikeScream, comment, getScream} from '../redux/actions/dataActions';
+// import LikeButton from './LikeButton';
+// import ScreamExpand from './ScreamExpand';
 import MyButton from '../util/MyButton';
 
 //MUI stuff
@@ -40,9 +40,9 @@ const styles = theme => ({
     }
 })
 
-class Task extends Component {
+class TaskListed extends Component {
     openExpanded = (event) =>{
-      this.props.comment()
+      // this.props.comment()
       // this.props.getScream(event.target.name)
     }
     render (){
@@ -53,28 +53,6 @@ class Task extends Component {
         return (
           <Card className={classes.card}>
             <CardContent className={classes.content}>
-              <Typography
-                variant="h5"
-                color="primary"
-                component={Link}
-                to={`/users/${userHandle}`}
-              >
-                {userHandle}
-              </Typography>
-              {deleteButton}
-              <Typography variant="body2" color="textSecondary">
-                {dayjs(createdAt).fromNow()}
-              </Typography>
-              <Typography variant="body1">{body}</Typography>
-              <LikeButton screamId={screamId} />
-              <span>{likeCount} Likes</span>
-              <MyButton tip="Comment" btnName={screamId} onClick={this.openExpanded}>
-                <ChatIcon color="primary" />
-              </MyButton>
-              <span>{commentCount} Comments</span>
-              <ScreamExpand
-              id={screamId} 
-               />
             </CardContent>
           </Card>
         );
@@ -82,13 +60,13 @@ class Task extends Component {
 }
 
 TaskListed.propTypes = {
-    task: PropTypes.object.isRequired,
-    likeScream: PropTypes.func.isRequired,
-    unlikeScream: PropTypes.func.isRequired,
-    comment: PropTypes.func.isRequired,
+    // task: PropTypes.object.isRequired,
+    // likeScream: PropTypes.func.isRequired,
+    // unlikeScream: PropTypes.func.isRequired,
+    // comment: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired,
-    classes: PropTypes.object.isRequired,
-    getScream: PropTypes.func.isRequired
+    // classes: PropTypes.object.isRequired,
+    // getScream: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
@@ -96,10 +74,10 @@ const mapStateToProps = (state) => ({
 })
 
 const mapActionsToProps = {
-    likeScream,
-    unlikeScream,
-    comment,
-    getScream
+    // likeScream,
+    // unlikeScream,
+    // comment,
+    // getScream
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(withSyles(styles)(TaskListed));

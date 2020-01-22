@@ -228,7 +228,7 @@ export default function(state = initialState, action) {
             ...state
         };
     case ADD_FILES_TO_TASK_RESPONSE:
-        let indexxxxd = state.tasks.findIndex(
+        let indexxxd = state.tasks.findIndex(
             task => task.taskId === action.payload.taskId
         );
         let lowindexxxd = state.tasks[indexxxd].taskResponses.findIndex(

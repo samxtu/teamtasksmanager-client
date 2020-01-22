@@ -46,7 +46,7 @@ export default function(state = initialState, action) {
         member: {}
       };
     case SEND_MESSAGE:
-        member.messages = [action.payload,...state.member.messages]
+        state.member.messages = [action.payload,...state.member.messages]
         return {
             ...state
         };
