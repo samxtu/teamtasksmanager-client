@@ -4,30 +4,36 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import dayjs from 'dayjs';
-import { uploadImage, logoutUser } from '../redux/actions/userActions';
-import EditProfile from './EditProfile';
-
+import { uploadProfileImage } from '../redux/actions/userActions';
+// import EditProfile from './EditProfile';
 
 // MUI stuff 
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import MuiLink from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
+import Skeleton from '@material-ui/lab/Skeleton';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
 
 // mui icons 
-import LocationOn from '@material-ui/icons/LocationOn';
-import LinkIcon from '@material-ui/icons/Link';
+import BusinessIcon from '@material-ui/icons/Business';
+import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
 import EditIcon from '@material-ui/icons/Edit';
 import CalendarToday from '@material-ui/icons/CalendarToday';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import KeyboardReturn from '@material-ui/icons/KeyboardReturn';
-
+import UpdateIcon from '@material-ui/icons/Update';
 
 
 const styles = (theme) =>({
     paper: {
         padding: 20
+    },
+    skelo: {
+        padding: '15px',
+        height: '10px'
     },
     profile: {
         '& .image-wrapper': {
@@ -70,6 +76,11 @@ const styles = (theme) =>({
         '& a': {
             margin: '20px 10px'
         }
+    },
+    content:{
+        margin: 'auto',
+        textAlign: 'center',
+        minHeight: '400px' 
     }
 })
 
@@ -78,17 +89,20 @@ class Profile extends Component {
         let image = event.target.files[0]
         const formData = new FormData()
         formData.append('image',image,image.name)
-        this.props.uploadImage(formData);
+        this.props.uploadProfileImage(formData);
     }
+
     handleImageEdit = () => {
         const imageFileInput = document.getElementById('imageInput');
         imageFileInput.click()
     }
-    handleLogout = () => {
-        this.props.logoutUser()
+
+    handleUpdate = () => {
+        
     }
+
     render() {
-        const {classes, user: {loading, authenticated, credentials: {handle, createdAt, bio, website, location, imageUrl}}}  = this.props;
+        const {classes, user: {loading, authenticated, credentials: {handle, createdAt, initial, firstname, lastname, email, department, imageUrl}}}  = this.props;
         
         let ProfileMarkup = !loading ? (authenticated? (
             <Paper className={classes.paper}>
@@ -104,43 +118,49 @@ class Profile extends Component {
                     </div>
                     <hr/>
                     <div className="profile-details">
-                        <MuiLink component={Link} to={`users/${handle}`} color="primary" variant="body2">@{handle}</MuiLink><hr/>
-                        {bio && (
-                            <Typography variant="body2">{bio}</Typography>
-                        )}<hr/>
-                        {location && (
+                        <Typography color="primary" variant="h5">User: {handle}</Typography><hr/>
+                        <Typography variant="body1">Fullname: {initial+' '+firstname+' '+lastname}</Typography><hr/>
+                        
+                            <AlternateEmailIcon color='primary'/>
+                            <span>Email: {email}</span><hr/>
+                        {department && (
                         <Fragment>
-                            <LocationOn color='primary'/>
-                            <span>{location}</span><hr/>
-                        </Fragment>
-                        )}
-                        {website && (
-                        <Fragment>
-                            <LinkIcon color='primary'/>
-                            <a href={website} target="_blank" rel='noopener noreferrer'>{' '+website}</a><hr/>
+                            <BusinessIcon color='primary'/>
+                            <MuiLink component={Link} to={`/team/${department}`} color="primary" variant="body2">{'Department: '+department}</MuiLink><hr/>
                         </Fragment>
                         )}
                         <CalendarToday color='primary'/>
-                        <span>Joined {dayjs(createdAt).format('MMM YYYY')}</span>
+                        <span>Added on {dayjs(createdAt).format('MMM D YYYY')}</span>
                     </div>
-                    <Tooltip title='Logout' placement='top'>
-                        <IconButton onClick={this.handleLogout}>
-                            <KeyboardReturn color='primary'/>
+                    <Tooltip title='Update info request' placement='top'>
+                        <IconButton onClick={this.handleUpdate}>
+                            <UpdateIcon color='primary'/>
                         </IconButton>
                     </Tooltip>
-                    <EditProfile/>
+                    {/* <EditProfile/> */}
                 </div>
 
             </Paper>
         ):(
             <Paper className={classes.paper}>
-                <Typography variant='body2' align='center'>No profile. Login or signup here!</Typography>
+                <Typography variant='body2' align='center'>No profile. Login again here!</Typography>
                 <div className={classes.buttons}>
                     <Button variant='contained' color='primary' component={Link} to='/login'>Login</Button>
-                    <Button variant='contained' color='secondary' component={Link} to='/signup'>Signup</Button>
                 </div>
             </Paper>
-        )):(<p>Loading...</p>)
+        )):(<Card className={classes.content}>
+            <CardHeader>
+                <Skeleton animation="wave" height={50} width={50} />
+            </CardHeader>
+            <CardContent className={classes.content} >
+                <Skeleton animation="wave" className={classes.skelo}  />
+                <Skeleton animation="wave" className={classes.skelo} width="80%" />
+                <Skeleton animation="wave" className={classes.skelo}  />
+                <Skeleton animation="wave" className={classes.skelo} width="80%" />
+                <Skeleton animation="wave" className={classes.skelo}  />
+                <Skeleton animation="wave" className={classes.skelo} width="80%" />
+            </CardContent>
+          </Card>)
 
         return ProfileMarkup;
     }
@@ -149,17 +169,15 @@ class Profile extends Component {
 Profile.prototypes = {
     user: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
-    uploadImage: PropTypes.func.isRequired,
-    logoutUser: PropTypes.func.isRequired
+    uploadProfileImage: PropTypes.func.isRequired
 }
 
 const mapActionsToProps = {
-    uploadImage,
-    logoutUser
+    uploadProfileImage
 }
 
 const mapStateToProps = (state) => ({
-    user: state.user
+    user: state.user,
 })
 
 export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(Profile))

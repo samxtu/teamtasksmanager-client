@@ -7,9 +7,7 @@ import MyButton from '../util/MyButton';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
-import Avatar from '@material-ui/core/Avatar';
 // mui icons 
-import HomeIcon from '@material-ui/icons/Home';
 import MenuIcon from '@material-ui/icons/Menu';
 import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
@@ -17,26 +15,23 @@ import Typography from '@material-ui/core/Typography';
   
 class Navbar extends Component {
     render (){
-        const {navatarClass, authenticated, newClass, toClick, avatarLink} = this.props;
+        const { authenticated, newClass, toClick} = this.props;
         return (
             <AppBar className={newClass}>
                 <Toolbar className="nav-container">
                     {authenticated?(
-                        <Fragment className="fraginnav">
+                        <Fragment>
                             <Hidden mdUp>
                                 <MyButton tip='Menu' onClick={toClick}>
                                     <MenuIcon />
                                 </MyButton>
                             </Hidden>
                             <Button color="inherit" component={Link} to="/login">
-                            <Avatar>
-                                <HomeIcon />
-                            </Avatar>
-                            <Typography variant='h5'>Office manager</Typography>
+                            <Typography variant='h5'>Office task manager</Typography>
                             </Button>
                         </Fragment>
                     ):(
-                        <Button color="inherit" component={Link} to="/login"><Typography variant='h2'>Office manager</Typography></Button>
+                        <Button color="inherit" component={Link} to="/login"><Typography variant='h5'>Office task manager</Typography></Button>
                     )}
                 </Toolbar>
             </AppBar>
@@ -45,13 +40,11 @@ class Navbar extends Component {
 }
 
 Navbar.propTypes = {
-    authenticated: PropTypes.bool.isRequired,
-    avatarLink: PropTypes.string.isRequired
+    authenticated: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = state => ({
-    authenticated: state.user.authenticated,
-    avatarLink: state.user.credentials.imageUrl
+    authenticated: state.user.authenticated
 })
 
 export default connect(mapStateToProps)(Navbar);

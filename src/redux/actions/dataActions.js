@@ -28,7 +28,10 @@ import {
     DELETE_RESPONSE_RESPONSE_COMMENT,
     CLEAR_ERRORS,
     SET_ERRORS,
-    LOADING_UI
+    LOADING_UI,
+    ADD_TODO,
+    EDIT_TODO,
+    SET_TODOS
   } from "../types";
   import axios from 'axios';
 
@@ -46,6 +49,25 @@ export const getTasks = (status) => (dispatch) =>{
         catchError(err)
         dispatch({
             type: SET_TASKS,
+            payload: []
+        })
+    })
+}
+
+export const getTodos = () => (dispatch) =>{
+    dispatch({ type: LOADING_DATA })
+    axios.get('/todos')
+    .then(res=>{
+        clearErrors()
+        dispatch({
+            type: SET_TODOS,
+            payload: res.data
+        })
+    })
+    .catch(err=>{
+        catchError(err)
+        dispatch({
+            type: SET_TODOS,
             payload: []
         })
     })
@@ -83,7 +105,16 @@ export const postTask = (files) => (dispatch) => {
     .catch(err => {
       catchError(err)
     })
-  };
+};
+
+export const addTodo = (data) => (dispatch) => {
+    dispatch({ type: LOADING_DATA })
+    dispatch({
+        type: ADD_TODO,
+        payload: data
+    });
+    dispatch({type: CLEAR_ERRORS})
+};
 
 export const editTask = (taskId, body) => dispatch => {
     axios.post(`/edittask/${taskId}`,body).then((res)=>{
@@ -95,6 +126,14 @@ export const editTask = (taskId, body) => dispatch => {
     }).catch(err=>{
         catchError(err)
     })
+}
+
+export const editTodo = (data) => dispatch => {
+    dispatch({
+        type: EDIT_TODO, 
+        payload: data
+    })
+    dispatch({type: CLEAR_ERRORS})
 }
 
 export const editTaskStatus = (taskId, status, deadline) => dispatch => {

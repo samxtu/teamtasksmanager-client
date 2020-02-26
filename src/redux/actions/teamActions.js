@@ -32,7 +32,7 @@ export const getTeam = () => (dispatch) => {
   .then(res => {
     dispatch({
       type: SET_TEAM_MEMBERS,
-      payload: res.data
+      payload: res.data.team
     });
   })
   .catch(error => {
@@ -115,15 +115,8 @@ export const changeMemberOnDutyStatus = (boolevard, deadline, userHandle) => (di
 }
 
 export const addTeamMember = (details) => (dispatch) => {
-  axios
-  .post(`/signup`,details)
-  .then((res) => {
     dispatch({
       type: ADD_TEAM_MEMBER,
-      payload: res.data
+      payload: details
     });
-  })
-  .catch(error => {
-    catchError(error)
-  });
 }

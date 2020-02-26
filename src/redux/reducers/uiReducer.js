@@ -1,8 +1,9 @@
-import { LOADING_UI, SET_ERRORS, CLEAR_ERRORS, STOP_LOADING_UI } from '../types';
+import { LOADING_UI, SET_ERRORS, CLEAR_ERRORS, STOP_LOADING_UI, LOAD_COMPANY } from '../types';
 
 const initialState = {
     loading: false,
-    errors: {}
+    errors: {},
+    company: {}
 }
 
 export default function uiReducer(state = initialState, action) {
@@ -28,6 +29,11 @@ export default function uiReducer(state = initialState, action) {
             return {
                 ...state,
                 loading: false
+            }
+        case LOAD_COMPANY:
+            return {
+                ...state,
+                company: action.payload
             }
         default: 
             return state;

@@ -7,8 +7,8 @@ import {getTasks} from '../redux/actions/dataActions';
 //Components
 import Task from '../components/TaskListed';
 import NoTaskTutorial from '../components/NoTaskTutorial';
-import AddTask from '../components/AddTask';
 // mui stuff
+import Typography  from '@material-ui/core/Typography';
 import Fab from '@material-ui/core/Fab';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -31,7 +31,7 @@ const styles = (theme) => ({
     }
   });
 
-class home extends Component {
+class completed extends Component {
     constructor(props){
         super(props)
         this.state = {
@@ -51,16 +51,12 @@ class home extends Component {
             pno: this.state.pno-1
         })
     }
-    addTask = (thetask)=>{
-
-    }
-    
     render (){
-        const {classes, user, team, data: {tasks,loading}} = this.props;
+        const {classes, data: {tasks,loading}} = this.props;
         const {pno}=this.state;
         let nothingToShowMarkup =  !loading && tasks.length < 1?(
             <Fragment>
-            <NoTaskTutorial page='home' pageNo={pno} />
+            <NoTaskTutorial page='completed' pageNo={pno} />
             <Card>
             <CardActions className={classes.controls}>
               <IconButton disabled={pno===1} onClick={this.sub} aria-label="previous">
@@ -109,28 +105,33 @@ class home extends Component {
         </Fragment>
             )
         return (
-            <Grid container style={{paddingTop:0}}>
+            <Grid container spacing={2}>
                 <Grid item sm={12} xs={12}>
                     {nothingToShowMarkup}
                     {ongoingTasksMarkup}
                 </Grid>
-                <AddTask addNewTask={this.addTask} user={user.credentials} team={team.team} />
+                <Fab
+                variant="extended"
+                size="small"
+                color="primary"
+                aria-label="add"
+                className={classes.extendedIcon}
+                >
+                <PostAddIcon />
+                Add task
+                </Fab>
             </Grid>
         )
     }
 }
 
-home.propTypes = {
+completed.propTypes = {
     getTasks: PropTypes.func.isRequired,
-    data: PropTypes.object.isRequired,
-    user: PropTypes.object.isRequired,
-    team: PropTypes.object.isRequired
+    data: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
-    data: state.data,
-    user: state.user,
-    team: state.team
+    data: state.data
 })
 
-export default connect(mapStateToProps, {getTasks})(withStyles(styles)(home));
+export default connect(mapStateToProps, {getTasks})(withStyles(styles)(completed));

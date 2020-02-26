@@ -15,7 +15,7 @@ import CardActions from "@material-ui/core/CardActions";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { Typography } from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
 
 const styles = (theme) => ({
   ...theme.common,
@@ -83,7 +83,7 @@ class login extends Component {
                   onChange={this.handleChange}
                 />
                 {errors.general && (
-                  <Typography variant="caption" className={classes.caption}>
+                  <Typography variant="caption" color='error' className={classes.caption}>
                     Incorrect credentials!
                   </Typography>
                 )}

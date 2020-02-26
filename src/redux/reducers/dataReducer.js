@@ -26,12 +26,16 @@ import {
   DELETE_TASK_RESPONSE_COMMENT,
   DELETE_RESPONSE_RESPONSE,
   DELETE_RESPONSE_RESPONSE_COMMENT,
+  ADD_TODO,
+  SET_TODOS,
+  EDIT_TODO
 } from "../types";
 
 const initialState = {
   tasks: [],
   task: {},
-  loading: false
+  loading: false,
+  todos:[]
 };
 
 export default function(state = initialState, action) {
@@ -47,6 +51,12 @@ export default function(state = initialState, action) {
         tasks: action.payload,
         loading: false
       };
+    case SET_TODOS:
+    return {
+        ...state,
+        todos: action.payload,
+        loading: false
+    };
     case SET_TASK:
       return {
         ...state,
@@ -59,7 +69,13 @@ export default function(state = initialState, action) {
         loading: false,
         tasks: [action.payload,...state.tasks],
         task: action.payload
-      }
+      };
+    case ADD_TODO:
+    return {
+        ...state,
+        loading: false,
+        todos: [action.payload,...state.todos]
+    };
     case CHANGE_TASK_STATUS:
       let index = state.tasks.findIndex(
         task => task.taskId === action.payload.taskId
@@ -91,12 +107,20 @@ export default function(state = initialState, action) {
         let indexxed = state.tasks.findIndex(
             task => task.taskId === action.payload.taskId
         );
-        state.tasks[indexxed] = {...state.tasks[indexxed],...action.payload};
+        state.tasks[indexxed] = {...state.tasks[indexxed],...action.payload.body};
         if (state.task.taskId === action.payload.taskId) {
           //behind should lie trouble try exchanging order action.payload spread first
           //didnt work? state items to edit
-            state.task = {...state.task,...action.payload};
+            state.task = {...state.task,...action.payload.body};
         }
+        return {
+            ...state
+        };
+    case EDIT_TODO:
+        let indetted = state.todos.findIndex(
+            todo => todo.todoId === action.payload.todoId
+        );
+        state.todos[indetted] = {...state.todos[indetted],...action.payload};
         return {
             ...state
         };
